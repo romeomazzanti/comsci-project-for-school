@@ -17,13 +17,13 @@ class Add_anime():# this section is part of the "ADDING an anime to a listani"
         self.anime_status_true = "true"
         self.anime_status_false = "false"
 
-    def is_text_valid(self, text: "string"):
+    def is_text_valid(self, text: str):
         if text and isinstance(text, str):
             if not text.isspace():
                 return True
         return False   #this function will be used later to check if the text/ anime title the user has input is valid
 
-    def call_jikan_api(self, url: "string", params = None):
+    def call_jikan_api(self, url: str, params = None):
         r = requests.get(url = url, params = params)
         results = r.json()
         logger.debug(results)
@@ -40,7 +40,7 @@ class Add_anime():# this section is part of the "ADDING an anime to a listani"
         logger.debug(f"ANIME ID: {anime_id}")
         return anime_id # getting rid of the useless information by looing for the useful data (in this case the anime id)
 
-    def fetch_episode_status(self, anime_id: "string"):
+    def fetch_episode_status(self, anime_id: str):
         logger.info("FETCHING EPISODE STATUS")
         url = f"{self.api_host}/{self.api_version}/anime/{anime_id}"
         results = self.call_jikan_api(url)
@@ -48,7 +48,7 @@ class Add_anime():# this section is part of the "ADDING an anime to a listani"
         logger.debug(f"IS ANIME AIRING: {anime_is_airing}")
         return anime_is_airing # searching for the status of the anime (if it is an airing anime or if it's already finished)
 
-    def fetch_anime_episodes(self, anime_id: "string"):
+    def fetch_anime_episodes(self, anime_id: str):
         logger.info(f"FETCHING ANIME EPISODES")
         #TODO Support Multiple Pages
         url = f"{self.api_host}/{self.api_version}/anime/{anime_id}/episodes/1"
@@ -82,13 +82,13 @@ class Episode_reminder():
         self.anime_list_airing =[]
         self.anime = anime
     
-    def is_text_valid(self, text: "string"):
+    def is_text_valid(self, text: str):
         if text and isinstance(text, str):
             if not text.isspace():
                 return True
         return False
 
-    def call_jikan_api(self, url: "string", params = None):
+    def call_jikan_api(self, url: str, params = None):
         r = requests.get(url = url, params = params)
         results = r.json()
         logger.debug(results)
@@ -105,7 +105,7 @@ class Episode_reminder():
         logger.debug(f"ANIME ID: {anime_id}")
         return anime_id
 
-    def fetch_episode_status(self, anime_id: "string"):
+    def fetch_episode_status(self, anime_id: str):
         logger.info("FETCHING EPISODE STATUS")
         url = f"{self.api_host}/{self.api_version}/anime/{anime_id}"
         results = self.call_jikan_api(url)
@@ -113,7 +113,7 @@ class Episode_reminder():
         logger.debug(f"IS ANIME AIRING: {anime_is_airing}")
         return anime_is_airing
 
-    def get_aired_date(self, anime_id: "string"):
+    def get_aired_date(self, anime_id: str):
         url = f"{self.api_host}/{self.api_version}/anime{anime_id}"
         results = self.call_jikan_api(url)
         anime_day = results["aired"]["prop"]["from"]["day"]
@@ -121,7 +121,7 @@ class Episode_reminder():
         return anime_day, anime_month
         
 
-    def fetch_anime_episodes(self, anime_id: "string"):
+    def fetch_anime_episodes(self, anime_id: str):
         logger.info(f"FETCHING TOTAL PAGES")
         url = f"{self.api_host}/{self.api_version}/anime/{anime_id}/episodes"
         results = self.call_jikan_api(url)
