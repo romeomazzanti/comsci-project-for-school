@@ -114,7 +114,7 @@ class Episode_reminder():
         return anime_is_airing
 
     def get_aired_date(self, anime_id: str):
-        url = f"{self.api_host}/{self.api_version}/anime{anime_id}"
+        url = f"{self.api_host}/{self.api_version}/anime/{anime_id}"
         results = self.call_jikan_api(url)
         anime_day = results["aired"]["prop"]["from"]["day"]
         anime_month = results["aired"]["prop"]["from"]["month"]
